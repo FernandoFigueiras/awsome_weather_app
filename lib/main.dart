@@ -1,7 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:async';
 
-main() => runApp(WeatherApp());
+import 'package:awsome_weather_app/components/body_page.dart';
+import 'package:awsome_weather_app/models/weather_forecast.dart';
+import 'package:awsome_weather_app/services/location.dart';
+import 'package:awsome_weather_app/services/weather_api.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
+
+main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(WeatherApp());
+}
 
 class WeatherApp extends StatelessWidget {
   @override
@@ -13,19 +25,35 @@ class WeatherApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+  _getPosition() async {
+    Position position = await Location.getPosition();
+    if (position != null) {
+      return _getCurrentWeather(position.latitude, position.longitude);
+    }
+
+    return null;
+  }
+
+  _getCurrentWeather(double lat, double lon) async {
+    WeatherForecast current = new WeatherForecast();
+
+    current = await WeatherApi.getWeatherForecast(lat, lon);
+
+    return current;
+  }
+
   @override
   Widget build(BuildContext context) {
+    Future<dynamic> currentWeather = _getPosition();
     return Scaffold(
-      body: Stack(
-        children: [
-          SvgPicture.asset(
-            "assets/images/gradient.svg",
-            // width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height,
-            fit: BoxFit.fill,
-          )
-        ],
-      ),
+      body: FutureBuilder<dynamic>(
+          future: currentWeather,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return BodyPage(snapshot.data);
+            }
+            return Center(child: CircularProgressIndicator());
+          }),
     );
   }
 }

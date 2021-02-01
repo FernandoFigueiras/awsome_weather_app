@@ -25,6 +25,9 @@ dependencies:
     sdk: flutter
   flutter_svg: ^0.19.2+1
   geolocator: ^6.1.14
+  carousel_slider: ^2.3.1
+  http: ^0.12.2
+  intl: ^0.16.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -64,16 +67,30 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
+  fonts:
+    - family: ElMessiri
+      fonts:
+        - asset: assets/fonts/ElMessiri-Bold.ttf
+        - asset: assets/fonts/ElMessiri-Medium.ttf
+        - asset: assets/fonts/ElMessiri-Regular.ttf
+        - asset: assets/fonts/ElMessiri-SemiBold.ttf
+
+        # - asset: fonts/Schyler-Italic.ttf
+        #   style: italic
+    - family: Orbitron
+      fonts:
+        - asset: assets/fonts/Orbitron-Black.ttf
+        - asset: assets/fonts/Orbitron-Bold.ttf
+        - asset: assets/fonts/Orbitron-ExtraBold.ttf
+        - asset: assets/fonts/Orbitron-Medium.ttf
+        - asset: assets/fonts/Orbitron-Regular.ttf
+        - asset: assets/fonts/Orbitron-SemiBold.ttf
+
+
+    - family: Play
+      fonts:
+        # - asset: assets\fonts\Play-Bold.ttf
+        - asset: assets/fonts/Play-Regular.ttf
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,
